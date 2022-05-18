@@ -1,38 +1,49 @@
 ﻿
 ## Multivariate Regression
-In multivariate situation, we have more than one input variables that will contribute information to the prediction of dependent variable. Suppose we have p features as inputs, the independent variables can be denoted as $X_1, X_2, X_3...X_p$
+In multivariate situation, we have more than one input variables that will contribute information to the prediction of dependent variable. Suppose we have p features as inputs, the independent variables can be denoted as <img src="https://render.githubusercontent.com/render/math?math=X_1, X_2, X_3...X_p">
 
-Thus the relationship between y and X, take the model $F$, we have:
+Thus the relationship between y and X, take the model <img src="https://render.githubusercontent.com/render/math?math=F">, we have:
 
-$E(y|X_1,X_2...X_p)=F(X_1,X_2...X_p)$
+<img src="https://render.githubusercontent.com/render/math?math=E(y|X_1,X_2...X_p)=F(X_1,X_2...X_p)">
 
-In linear regression, we have $p+1$ numbers of beta coefficients with $\beta_0$ represent the intercept. So the functional relationship between X and y is:
+In linear regression, we have <img src="https://render.githubusercontent.com/render/math?math=p+1">
+ numbers of beta coefficients with <img src="https://render.githubusercontent.com/render/math?math=\beta_0"> represent the intercept. So the functional relationship between X and y is:
  
- $E(y|X_1,X_2...X_p)=\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_pX_p$
+ <img src="https://render.githubusercontent.com/render/math?math=E(y|X_1,X_2...X_p)=\beta_0+\beta_1X_1+\beta_2X_2+...+\beta_pX_p">
 
-If we let $X$ be the matrix of dependent variables. Suppose we have i observations with p numbers of features, $X$ is a $i\times p$ matrix. Let $\beta$ be a vector of coefficients. Then we have:
 
-$E(y) = \beta X$
+If we let <img src="https://render.githubusercontent.com/render/math?math=X">
+ be the matrix of dependent variables. Suppose we have i observations with p numbers of features, <img src="https://render.githubusercontent.com/render/math?math=X">
+ is a <img src="https://render.githubusercontent.com/render/math?math=i\times p">
+ matrix. Let <img src="https://render.githubusercontent.com/render/math?math=\beta">
+be a vector of coefficients. Then we have:
 
-We can then solve for $\beta$ by multiplying $X^T$ to both sides:
+<img src="https://render.githubusercontent.com/render/math?math=$E(y) = \beta X$">
 
-$X^Ty = \beta X^TX+ \epsilon X^T$
 
-$X^Ty = \beta X^TX+ 0 X^T$
+We can then solve for <img src="https://render.githubusercontent.com/render/math?math=\beta">
+ by multiplying <img src="https://render.githubusercontent.com/render/math?math=$X^T$"> to both sides:
+ 
+<img src="https://render.githubusercontent.com/render/math?math=$X^Ty = \beta X^TX+ \epsilon X^T$">
 
-$\hat{\beta} = (X^tX)^{-1}X^t Y$
+<img src="https://render.githubusercontent.com/render/math?math=$X^Ty = \beta X^TX+ 0 X^T$">
 
-For locally weighted regression, we will add weighting terms to the computation of $\beta$:
+<img src="https://render.githubusercontent.com/render/math?math=$\hat{\beta} = (X^tX)^{-1}X^t Y$">
 
-$\hat{\beta} = (X^{T}WX)^{-1}X^{T}WY$
 
-However, when the number of features rise to a large value, sometime not all variables contribute information to the prediction of y. Then we will need a variable selection algorithm to pick out features that are not important to the model. We will assign weights $w_i$ to each of the features. 0 represents an unimportant feature that we want to excluded from our model and 1 represent an important one. Common variable selection approaches include regularization methods such as Ridge, Lasso and ElasticNets. We can use these algorithm to reconstruct the sparsity pattern of $W$
+For locally weighted regression, we will add weighting terms to the computation of <img src="https://render.githubusercontent.com/render/math?math=\beta"> :
+
+![equation](https://latex.codecogs.com/svg.image?%5Chat%7B%5Cbeta%7D%20=%20(X%5E%7BT%7DWX)%5E%7B-1%7DX%5E%7BT%7DWY)
+
+
+However, when the number of features rise to a large value, sometime not all variables contribute information to the prediction of y. Then we will need a variable selection algorithm to pick out features that are not important to the model. We will assign weights <img src="https://render.githubusercontent.com/render/math?math=$w_i$">
+ to each of the features. 0 represents an unimportant feature that we want to excluded from our model and 1 represent an important one. Common variable selection approaches include regularization methods such as Ridge, Lasso and ElasticNets. We can use these algorithm to reconstruct the sparsity pattern of $W$
 
 
 ## Gradient Boosting
 After we use our initial regression model to estimate the dependent variable with input features, we will have residuals. 
 
-$\text{residuals}_i= \beta_ix_i-y_i$ 
+![equation](https://latex.codecogs.com/svg.image?%5Ctext%7Bresiduals%7D_i=%20%5Cbeta_ix_i-y_i)
 
 To improve the accuracy of predictions by the initial model (we considered as a weak learner), scientists introduced a method to train another model on the error terms with respect to x. This is gradient boosting. The most common approach is to train a decision tree as the boosting algorithm, but there are many choices of boosters. The final prediction after gradient booster will be the sum of predictions made by the weak learner and prediction made by boosting algorithm. 
 
@@ -49,9 +60,9 @@ After we fit the original model, we calculate the residuals for each data point.
 
 The function for Gain is applied with each split:
 
- $Gain = \frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}- \frac{(G_L+G_R)^2}{H_L+H_R+\lambda}-\gamma$
-
-G_L is the sum of residuals in the left node, G_R is the sum of residuals in the right node, H_R is the number of residuals in the left node and H_L is the number of residuals in the right node.
+ ![equation](https://latex.codecogs.com/svg.image?Gain%20=%20%5Cfrac%7BG_L%5E2%7D%7BH_L&plus;%5Clambda%7D&plus;%5Cfrac%7BG_R%5E2%7D%7BH_R&plus;%5Clambda%7D-%20%5Cfrac%7B(G_L&plus;G_R)%5E2%7D%7BH_L&plus;H_R&plus;%5Clambda%7D-%5Cgamma)
+ 
+<img src="https://render.githubusercontent.com/render/math?math=G_L"> is the sum of residuals in the left node, <img src="https://render.githubusercontent.com/render/math?math=G_R"> is the sum of residuals in the right node, <img src="https://render.githubusercontent.com/render/math?math=H_R"> is the number of residuals in the left node and <img src="https://render.githubusercontent.com/render/math?math=H_L"> is the number of residuals in the right node.
 
   
 
@@ -61,7 +72,7 @@ For each node, we use the Gain function to decide where is the best place to spl
 
 After the first decision tree is constructed based on the residuals, we have a new model. The prediction now equals to the initial prediction plus the prediction made by the decision tree learner multiplies a learning rate. The new model will have a new residuals when it is compared to the real values of y. The XGBoost algorithm will build another decision tree based on the new residuals. This process is repeated n times(a designated values). The final prediction will be as follows
 
- $$Prediction = Initial \text{ }Prediction + Learning Rate \times Prediction_1 + Learning Rate \times Prediction_2 + ....Learning Rate \times Prediction_n$$
+![equation](https://latex.codecogs.com/svg.image?Prediction%20=%20Initial%20%5Ctext%7B%20%7DPrediction%20&plus;%20Learning%20Rate%20%5Ctimes%20Prediction_1%20&plus;%20Learning%20Rate%20%5Ctimes%20Prediction_2%20&plus;%20....Learning%20Rate%20%5Ctimes%20Prediction_n)
 
 In this project, I will show the steps in writing a gradient boosting algorithm with a random forest regressor as booster. Then I will applied the gradient boosted regression algorithm to the analysis of a real dataset and compare it with prediction made by the original regression algorithm and xgboost. The performance of these models will be evaluated by a cross-validated mean square error. 
 
@@ -199,6 +210,7 @@ print('The cross-validated mean square error of locally weighted regression with
 ```
 The cross-validated mean square error of locally weighted regression with gradient boosting is 17.728742021954826
 ```
+#use xgboost to fit the data
 import xgboost as xgb
 
 model_xgb = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
@@ -223,9 +235,10 @@ print('The cross-validated mean square error of xgboost regressor is '+str(mse_x
 ```
 The cross-validated mean square error of xgboost regressor is 15.274251246203415
 
-The result show that xgboost outperformed both locally weighted regression and gradient boosted locally weighted regression. The mean square error reported by xgboost is the lower among all three regressors. The implementation of Gradient boost increase the accuracy of locally weighted regression. But it is not as efficient as xgboost. Since xgboost has multiple boosters, this result is much expected. 
+The result show that xgboost greatly outperformed  both locally weighted regression and gradient boosted locally weighted regression. The mean square error reported by xgboost is the lowest among all three regressors. The implementation of Gradient boost increase the accuracy of locally weighted regression. But it is not as efficient as xgboost. Since xgboost has multiple boosters while our own gradient boosting algorithm has only one booster, this result is much expected. 
 
 
 Reference:
+
 https://towardsdatascience.com/xgboost-python-example-42777d01001e
 
